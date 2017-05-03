@@ -1,0 +1,36 @@
+@mixin column-styles($gutter,$width) {
+  float: left;
+  padding-left:#{$gutter};
+  padding-right:#{$gutter};
+  min-height:1px;
+  width:$width;
+}
+
+@mixin grid($columns,$affix:"") {
+  @for $i from 1 through $columns {
+    .col-#{$affix}l-#{$i} { @include column-styles($columnSpacing,percentage(1/$columns*$i)); }
+    .col-#{$affix}m-#{$i} { @include column-styles($columnSpacing,percentage(1/$columns*$i)); }
+    .col-#{$affix}s-#{$i} { @include column-styles($columnSpacing,percentage(1/$columns*$i)); }
+  }
+  .row {margin-left:-#{$columnSpacing};margin-right:-#{$columnSpacing};}
+  @media all and (max-width:991px) {
+    @for $i from 1 through $columns {
+      .col-#{$affix}l-#{$i} {width:100%;float:none; }
+    }
+  }
+  @media all and (max-width:767px) {
+    @for $i from 1 through $columns {
+      .col-#{$affix}m-#{$i} {width:100%;float:none; }
+    }
+  }
+}
+
+@mixin placeholder {
+  &.placeholder { @content; }
+  &:-moz-placeholder { @content; }
+  &::-moz-placeholder { @content; }
+  &:-ms-input-placeholder { @content; }
+  &::-webkit-input-placeholder { @content; }
+}
+
+@include grid(12);
